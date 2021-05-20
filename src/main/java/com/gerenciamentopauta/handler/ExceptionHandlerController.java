@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @ControllerAdvice
 @Slf4j
-public class ControllerExceptionHandler {
+public class ExceptionHandlerController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({SessaoFechadaException.class, CpfException.class, InelegivelVotarException.class,
