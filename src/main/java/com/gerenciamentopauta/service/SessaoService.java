@@ -1,7 +1,6 @@
-package com.gerenciamentopauta.services;
+package com.gerenciamentopauta.service;
 
 import com.gerenciamentopauta.dto.ResultadoVotacaoDto;
-import com.gerenciamentopauta.dto.SessaoDto;
 import com.gerenciamentopauta.entity.Sessao;
 
 import java.util.List;
@@ -10,11 +9,11 @@ import java.util.List;
  * Interface dos serviços relacionados a sessão.
  */
 public interface SessaoService {
-    List<Sessao> getSession();
+    List<Sessao> obterSessoes();
 
-    Sessao getSessaoByPautaId(String pautaId);
+    Sessao obterSessaoPelaPautaId(String pautaId);
 
-    Sessao criarSessao(SessaoDto sessaoDto);
+    Sessao criarSessao(Sessao sessao);
 
     ResultadoVotacaoDto obtemResultadoSessaoPelaPautaId(String pautaId);
 }

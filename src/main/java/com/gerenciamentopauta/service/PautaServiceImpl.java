@@ -1,11 +1,10 @@
-package com.gerenciamentopauta.services;
+package com.gerenciamentopauta.service;
 
-import com.gerenciamentopauta.exception.NotFoundException;
-import com.gerenciamentopauta.repository.PautaRepository;
-import com.gerenciamentopauta.dto.PautaDto;
 import com.gerenciamentopauta.entity.Pauta;
-import com.gerenciamentopauta.mapper.PautaMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.gerenciamentopauta.exception.NotFoundException;
+import com.gerenciamentopauta.exception.PautaExistenteException;
+import com.gerenciamentopauta.repository.PautaRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,25 +13,28 @@ import java.util.List;
  * Implementação dos serviços relacionados a pauta.
  */
 @Service
+@AllArgsConstructor
 public class PautaServiceImpl implements PautaService {
 
-    @Autowired
     private PautaRepository pautaRepository;
 
     @Override
-    public List<Pauta> getPautas() {
+    public List<Pauta> obterPautas() {
         return this.pautaRepository.findAll();
     }
 
     @Override
-    public Pauta getPauta(String pautaId) {
+    public Pauta obterPauta(String pautaId) {
         return this.pautaRepository.findById(pautaId)
                 .orElseThrow(() -> new NotFoundException("pauta não encontrada"));
     }
 
     @Override
-    public Pauta createPauta(PautaDto pautaDto) {
-        return this.pautaRepository.save(PautaMapper.mapPauta(pautaDto));
+    public Pauta criarPauta(Pauta pauta) {
+        if(this.pautaRepository.existsById(pauta.getPautaId())){
+            throw new PautaExistenteException("Pauta já existente");
+        }
+        return this.pautaRepository.insert(pauta);
     }
 
 }

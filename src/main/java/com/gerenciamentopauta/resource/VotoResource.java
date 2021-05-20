@@ -1,18 +1,20 @@
 package com.gerenciamentopauta.resource;
 
-import com.gerenciamentopauta.services.VotoService;
 import com.gerenciamentopauta.dto.ErrorRespostaDto;
 import com.gerenciamentopauta.dto.VotoDto;
 import com.gerenciamentopauta.entity.Voto;
 import com.gerenciamentopauta.mapper.VotoMapper;
+import com.gerenciamentopauta.service.VotoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -40,6 +42,7 @@ public class VotoResource {
      * @return dto de votaçao.
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Realiza o voto em uma sessão")
     @ApiResponses({
         @ApiResponse(code = 200, message = "OK", response = VotoDto.class),
@@ -49,7 +52,7 @@ public class VotoResource {
     public VotoDto realizarVoto(@Valid @RequestBody VotoDto votoDto) {
         log.info("Request recebida para realizar um voto: {}", kv("votoAdicionado", votoDto));
 
-        final Voto voto = votoService.realizarVotacao(votoDto);
+        final Voto voto = votoService.realizarVotacao(VotoMapper.mapVoto(votoDto));
 
         log.info("{} adicionado com sucesso", kv("Voto", voto));
 

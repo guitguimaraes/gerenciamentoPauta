@@ -1,12 +1,14 @@
 package com.gerenciamentopauta.handler;
 
+import com.gerenciamentopauta.dto.ErrorRespostaDto;
 import com.gerenciamentopauta.exception.CpfException;
 import com.gerenciamentopauta.exception.InelegivelVotarException;
 import com.gerenciamentopauta.exception.NotFoundException;
+import com.gerenciamentopauta.exception.PautaExistenteException;
 import com.gerenciamentopauta.exception.SessaoAbertaException;
 import com.gerenciamentopauta.exception.SessaoFechadaException;
 import com.gerenciamentopauta.exception.SessaoInexistenteException;
-import com.gerenciamentopauta.dto.ErrorRespostaDto;
+import com.gerenciamentopauta.exception.VotoExistenteException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +21,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @ControllerAdvice
 @Slf4j
-public class GlobalExceptionHandler {
+public class ControllerExceptionHandler {
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({SessaoFechadaException.class, CpfException.class, InelegivelVotarException.class,
-        SessaoAbertaException.class, SessaoInexistenteException.class})
+        SessaoAbertaException.class, SessaoInexistenteException.class, PautaExistenteException.class, VotoExistenteException.class})
     public ResponseEntity<ErrorRespostaDto> handleInternalServerError(Exception exception) {
         return handleException(exception, HttpStatus.BAD_REQUEST);
     }

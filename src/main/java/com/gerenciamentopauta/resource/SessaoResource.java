@@ -1,7 +1,7 @@
 package com.gerenciamentopauta.resource;
 
 import com.gerenciamentopauta.mapper.SessaoMapper;
-import com.gerenciamentopauta.services.SessaoService;
+import com.gerenciamentopauta.service.SessaoService;
 import com.gerenciamentopauta.dto.ErrorRespostaDto;
 import com.gerenciamentopauta.dto.ResultadoVotacaoDto;
 import com.gerenciamentopauta.dto.SessaoDto;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,14 +48,15 @@ public class SessaoResource {
      */
     @GetMapping
     @ApiOperation(value = "Retorna uma lista de todas as Sessões")
+    @ResponseStatus(HttpStatus.OK)
     @ApiResponses({
         @ApiResponse(code = 200, message = "OK", response = SessaoDto.class),
         @ApiResponse(code = 400, message = "BAD_REQUEST", response = ErrorRespostaDto.class)
     })
-    public List<SessaoDto> obtemSessoes() {
+    public List<SessaoDto> obterSessoes() {
         log.info("Request recebida para encontrar todas Sessões");
 
-        final List<Sessao> sessoes = sessaoService.getSession();
+        final List<Sessao> sessoes = sessaoService.obterSessoes();
 
         log.info("{}  encontadas", kv("Numero de Sessões", sessoes.size()));
 
@@ -69,16 +71,17 @@ public class SessaoResource {
      */
     @GetMapping("/{pautaId}")
     @ApiOperation(value = "Retorna uma sessão pelo id da sua pauta")
+    @ResponseStatus(HttpStatus.OK)
     @ApiResponses({
         @ApiResponse(code = 200, message = "OK", response = SessaoDto.class),
         @ApiResponse(code = 400, message = "BAD_REQUEST", response = ErrorRespostaDto.class),
         @ApiResponse(code = 500, message = "INTERNAL_SERVER_ERROR", response = ErrorRespostaDto.class)
     })
-    public SessaoDto obtemSessaoPorPautaId(@PathVariable String pautaId) {
+    public SessaoDto obtemSessaoPorPautaId(@NotBlank @PathVariable String pautaId) {
 
         log.info("Request recebida para encontrar uma sessao pelo Id: " + pautaId);
 
-        Sessao sessao = sessaoService.getSessaoByPautaId(pautaId);
+        Sessao sessao = sessaoService.obterSessaoPelaPautaId(pautaId);
 
         log.info("{} encontrada com sucesso", kv("Sessao", sessao));
 
@@ -102,7 +105,7 @@ public class SessaoResource {
     public SessaoDto abrirSessao(@Valid @RequestBody SessaoDto sessaoDto) {
         log.info("Request recebido para iniciar uma sessao: {}", kv("sessaoAdicionada", sessaoDto));
 
-        final Sessao sessao = sessaoService.criarSessao(sessaoDto);
+        final Sessao sessao = sessaoService.criarSessao(SessaoMapper.mapSessao(sessaoDto));
 
         log.info(" {} adicionada com sucesso", kv("Sessao", sessao));
 
@@ -117,12 +120,13 @@ public class SessaoResource {
      */
     @GetMapping("/{pautaId}/resultado")
     @ApiOperation(value = "Retorna o resultado de uma votação de uma sessão pelo id da sua pauta")
+    @ResponseStatus(HttpStatus.OK)
     @ApiResponses({
         @ApiResponse(code = 200, message = "OK", response = SessaoDto.class),
         @ApiResponse(code = 400, message = "BAD_REQUEST", response = ErrorRespostaDto.class),
         @ApiResponse(code = 500, message = "INTERNAL_SERVER_ERROR", response = ErrorRespostaDto.class)
     })
-    public ResultadoVotacaoDto obtemResultadoSessaoPelaPautaId(@PathVariable String pautaId) {
+    public ResultadoVotacaoDto obtemResultadoSessaoPelaPautaId(@NotBlank @PathVariable String pautaId) {
         return sessaoService.obtemResultadoSessaoPelaPautaId(pautaId);
     }
 

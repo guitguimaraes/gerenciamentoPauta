@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
  * Ponto de inicio da applicação.
  */
 @SpringBootApplication
-public class PautasApplication {
+public class GerenciamentoPautasApplication {
 
     /**
      * Bean para implementação do RestTemplate.
@@ -27,6 +27,6 @@ public class PautasApplication {
      * @param args String
      */
     public static void main(String[] args) {
-        SpringApplication.run(PautasApplication.class, args);
+        SpringApplication.run(GerenciamentoPautasApplication.class, args);
     }
 }

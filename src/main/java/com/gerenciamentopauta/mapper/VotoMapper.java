@@ -1,6 +1,5 @@
 package com.gerenciamentopauta.mapper;
 
-import com.gerenciamentopauta.entity.Voto;
 import com.gerenciamentopauta.dto.VotoDto;
 import com.gerenciamentopauta.util.VotoEnum;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
@@ -16,8 +15,8 @@ public class VotoMapper {
      * @param votoDto Dto de voto
      * @return Voto para gerenciar internamente.
      */
-    public static Voto mapVoto(VotoDto votoDto) {
-        return Voto.builder()
+    public static com.gerenciamentopauta.entity.Voto mapVoto(VotoDto votoDto) {
+        return com.gerenciamentopauta.entity.Voto.builder()
             .voto(VotoEnum.valueOf(StringUtils.upperCase(votoDto.getVoto())).getValue())
             .cpf(votoDto.getCpf())
             .pautaId(votoDto.getPautaId())
@@ -30,7 +29,7 @@ public class VotoMapper {
      * @param voto entidade voto
      * @return VotoDto para expor externamente.
      */
-    public static VotoDto mapVotoDto(Voto voto) {
+    public static VotoDto mapVotoDto(com.gerenciamentopauta.entity.Voto voto) {
         VotoDto votoDto = new VotoDto();
         votoDto.setCpf(voto.getCpf());
         votoDto.setPautaId(voto.getPautaId());

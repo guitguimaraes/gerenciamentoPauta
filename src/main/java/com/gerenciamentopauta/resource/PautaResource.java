@@ -1,6 +1,6 @@
 package com.gerenciamentopauta.resource;
 
-import com.gerenciamentopauta.services.PautaService;
+import com.gerenciamentopauta.service.PautaService;
 import com.gerenciamentopauta.dto.PautaDto;
 import com.gerenciamentopauta.entity.Pauta;
 import com.gerenciamentopauta.mapper.PautaMapper;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,11 +45,12 @@ public class PautaResource {
      * @return lista de DTO de todas pautas criadas.
      */
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retorna uma lista de todas as pautas")
     public List<PautaDto> obterPautas() {
         log.info("Request recebida para encontrar todas pautas");
 
-        final List<Pauta> pautas = pautaService.getPautas();
+        final List<Pauta> pautas = pautaService.obterPautas();
 
         log.info("{}  encontadas", kv("Numero de Pautas", pautas.size()));
 
@@ -62,11 +64,12 @@ public class PautaResource {
      * @return DTO da pauta encontrada.
      */
     @GetMapping("/{pautaId}")
+    @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retorna uma pauta pelo seu id")
-    public PautaDto obtemPauta(@PathVariable String pautaId) {
+    public PautaDto obtemPauta(@NotBlank @PathVariable String pautaId) {
         log.info("Request recebida para encontrar uma pauta pelo {}", kv("PautaId", pautaId));
 
-        final Pauta pauta = pautaService.getPauta(pautaId);
+        final Pauta pauta = pautaService.obterPauta(pautaId);
 
         log.info("{} encontrada com sucesso", kv("Pauta", pauta));
 
@@ -85,7 +88,7 @@ public class PautaResource {
     public PautaDto criaPauta(@Valid @RequestBody PautaDto pautaDto) {
         log.info("Request recebido para adicionar uma pauta: {}", kv("pautaAdicionado", pautaDto));
 
-        final Pauta pauta = pautaService.createPauta(pautaDto);
+        final Pauta pauta = pautaService.criarPauta(PautaMapper.mapPauta(pautaDto));
 
         log.info("Pauta {} adicionada com sucesso", kv("pautaAdicionado", pauta));
 
