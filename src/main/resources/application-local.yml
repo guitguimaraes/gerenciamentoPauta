@@ -1,0 +1,4 @@
+server:
+  port: 9080
+external:
+  cpfUrl: https://user-info.herokuapp.com/users/
