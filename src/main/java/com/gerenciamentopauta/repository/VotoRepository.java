@@ -12,8 +12,7 @@ import java.util.Optional;
  */
 public interface VotoRepository extends MongoRepository<Voto, String> {
 
-    @Query("{ 'pautaId': ?0, 'cpf': ?1}")
-    Optional<Voto> findByPautaIdAndCpfPessoa(String idPauta, String cpfPessoa);
+    Optional<Voto> findByPautaIdAndCpf(String idPauta, String cpfPessoa);
 
     @Query("{ 'pautaId': ?0}")
     Optional<List<Voto>> findByPautaId(String idPauta);

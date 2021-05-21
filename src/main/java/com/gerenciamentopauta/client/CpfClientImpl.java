@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import static net.logstash.logback.argument.StructuredArguments.kv;
+
 /**
  * implementação Client validação CPF.
  */
@@ -32,8 +34,9 @@ public class CpfClientImpl implements CpfClient {
             final ResponseEntity<ElegivelVotoDto> responseEntity = restTemplate
                     .getForEntity(configuracaoExternaUrl.getCpfUrl().concat(cpf), ElegivelVotoDto.class);
 
-            log.info("Validação CPF:".concat(cpf)
-                    .concat("response").concat(responseEntity.toString()));
+            log.info("Validacao : {}, retorno do serviço {}",
+                kv("CPF ",cpf),
+                kv("Response", responseEntity));
 
             return responseEntity;
         } catch (RestClientException exception) {

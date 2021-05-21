@@ -28,6 +28,17 @@ da aplicação.
 
 Gerenciamento de pauta é uma aplicação que atravéz de APIs gerencia as pautas e contabiliza os votos realizados nas sessões.
 
+### Rodar Aplicação
+Comando para executar a aplicação na url: http://localhost:9080/, basta executar o comando abaixo: 
+
+`./gradlew bootRun`
+
+Lembrando que para rodar a aplicação é necessário ter Mongo na sua maquina.
+
+Para rodar o build da aplicação, testes unitarios e checkstyle, o comando é:
+
+`./gradlew build` 
+
 ####Endpoints Externalizados:
 
 #####Pauta

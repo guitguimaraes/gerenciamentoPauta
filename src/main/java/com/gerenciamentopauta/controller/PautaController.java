@@ -1,7 +1,8 @@
 package com.gerenciamentopauta.controller;
 
+import com.gerenciamentopauta.dto.PautaResponseDto;
 import com.gerenciamentopauta.service.PautaService;
-import com.gerenciamentopauta.dto.PautaDto;
+import com.gerenciamentopauta.dto.PautaRequestDto;
 import com.gerenciamentopauta.entity.Pauta;
 import com.gerenciamentopauta.mapper.PautaMapper;
 import io.swagger.annotations.Api;
@@ -47,14 +48,14 @@ public class PautaController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retorna uma lista de todas as pautas")
-    public List<PautaDto> obterPautas() {
+    public List<PautaResponseDto> obterPautas() {
         log.info("Request recebida para encontrar todas pautas");
 
         final List<Pauta> pautas = pautaService.obterPautas();
 
         log.info("{}  encontadas", kv("Numero de Pautas", pautas.size()));
 
-        return pautas.stream().map(PautaMapper::mapPautaDto).collect(Collectors.toList());
+        return pautas.stream().map(PautaMapper::mapPautaResponseDto).collect(Collectors.toList());
     }
 
     /**
@@ -66,32 +67,32 @@ public class PautaController {
     @GetMapping("/{pautaId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retorna uma pauta pelo seu id")
-    public PautaDto obterPautaPeloPautaId(@NotBlank @PathVariable String pautaId) {
+    public PautaResponseDto obterPautaPeloPautaId(@NotBlank @PathVariable String pautaId) {
         log.info("Request recebida para encontrar uma pauta pelo {}", kv("PautaId", pautaId));
 
         final Pauta pauta = pautaService.obterPauta(pautaId);
 
         log.info("{} encontrada com sucesso", kv("Pauta", pauta));
 
-        return PautaMapper.mapPautaDto(pauta);
+        return PautaMapper.mapPautaResponseDto(pauta);
     }
 
     /**
      * Cria pauta nova.
      *
-     * @param pautaDto DTO de criação da pauta.
+     * @param pautaRequestDto DTO de criação da pauta.
      * @return DTO de pauta criada.
      */
     @ApiOperation(value = "Cria uma nova pauta")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public PautaDto criarPauta(@Valid @RequestBody PautaDto pautaDto) {
-        log.info("Request recebido para adicionar uma pauta: {}", kv("pautaAdicionado", pautaDto));
+    public PautaResponseDto criarPauta(@Valid @RequestBody PautaRequestDto pautaRequestDto) {
+        log.info("Request recebido para adicionar uma pauta: {}", kv("pautaAdicionado", pautaRequestDto));
 
-        final Pauta pauta = pautaService.criarPauta(PautaMapper.mapPauta(pautaDto));
+        final Pauta pauta = pautaService.criarPauta(PautaMapper.mapPauta(pautaRequestDto));
 
         log.info("Pauta {} adicionada com sucesso", kv("pautaAdicionado", pauta));
 
-        return PautaMapper.mapPautaDto(pauta);
+        return PautaMapper.mapPautaResponseDto(pauta);
     }
 }

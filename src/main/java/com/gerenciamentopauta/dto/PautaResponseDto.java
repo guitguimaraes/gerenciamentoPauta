@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
  * Dto de manipulação da pauta.
  */
 @Data
-public class PautaDto {
+public class PautaResponseDto {
 
     @ApiModelProperty(value = "Pauta Id")
     private String pautaId;

@@ -1,6 +1,7 @@
 package com.gerenciamentopauta.controller
 
-import com.gerenciamentopauta.dto.PautaDto
+import com.gerenciamentopauta.dto.PautaRequestDto
+import com.gerenciamentopauta.dto.PautaResponseDto
 import com.gerenciamentopauta.entity.Pauta
 import com.gerenciamentopauta.service.PautaService
 import spock.lang.Specification
@@ -18,7 +19,7 @@ class PautaControllerSpec extends Specification {
         1 * pautaService.obterPautas() >> pautasLista
 
         when:
-        List<PautaDto> pautasDtos = pautaResource.obterPautas()
+        List<PautaResponseDto> pautasDtos = pautaResource.obterPautas()
 
         then:
 
@@ -37,7 +38,7 @@ class PautaControllerSpec extends Specification {
         1 * pautaService.obterPauta(_) >> pauta
 
         when:
-        PautaDto pautaDto = pautaResource.obterPautaPeloPautaId('pautaId')
+        PautaResponseDto pautaDto = pautaResource.obterPautaPeloPautaId('pautaId')
 
         then:
 
@@ -57,7 +58,7 @@ class PautaControllerSpec extends Specification {
 
         when:
 
-        PautaDto pautaDto = pautaResource.criarPauta(criaPautaDto())
+        PautaResponseDto pautaDto = pautaResource.criarPauta(criaPautaDto())
 
         then:
 
@@ -78,8 +79,8 @@ class PautaControllerSpec extends Specification {
     }
 
     def criaPautaDto() {
-        PautaDto pautaDto = new PautaDto()
-        pautaDto.pautaId = 'pautaId'
+        PautaRequestDto pautaDto = new PautaRequestDto()
+        pautaDto.nome = 'pautaId'
         pautaDto
     }
 }

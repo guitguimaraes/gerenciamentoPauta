@@ -51,7 +51,7 @@ public class VotoServiceImpl implements VotoService {
     }
 
     private boolean pessoaVotou(String pautaId, String cpf) {
-        return votoRepository.findByPautaIdAndCpfPessoa(pautaId, cpf).isPresent();
+        return votoRepository.findByPautaIdAndCpf(pautaId, cpf).isPresent();
     }
 
 }

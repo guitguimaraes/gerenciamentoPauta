@@ -29,7 +29,7 @@ class VotoServiceSpec extends Specification {
         ElegivelVotoDto elegivel = criaElegivelDto()
 
         sessaoService.obterSessaoPelaPautaId(_) >> sessao
-        votoRepository.findByPautaIdAndCpfPessoa(_, _) >> Optional.empty()
+        votoRepository.findByPautaIdAndCpf(_, _) >> Optional.empty()
         cpfClient.isCpfValid(voto.cpf) >> response
         response.body >> elegivel
         votoRepository.insert(voto) >> voto
@@ -72,7 +72,7 @@ class VotoServiceSpec extends Specification {
         Sessao sessao = criaSessao()
 
         sessaoService.obterSessaoPelaPautaId(_) >> sessao
-        votoRepository.findByPautaIdAndCpfPessoa(_, _) >> Optional.of(voto)
+        votoRepository.findByPautaIdAndCpf(_, _) >> Optional.of(voto)
 
         when:
 
@@ -94,7 +94,7 @@ class VotoServiceSpec extends Specification {
         elegivel.status = 'UNABLE_TO_VOTE'
 
         sessaoService.obterSessaoPelaPautaId(_) >> sessao
-        votoRepository.findByPautaIdAndCpfPessoa(_, _) >> Optional.empty()
+        votoRepository.findByPautaIdAndCpf(_, _) >> Optional.empty()
         cpfClient.isCpfValid(voto.cpf) >> response
         response.body >> elegivel
 

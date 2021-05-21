@@ -2,7 +2,6 @@ package com.gerenciamentopauta.service;
 
 import com.gerenciamentopauta.entity.Pauta;
 import com.gerenciamentopauta.exception.NotFoundException;
-import com.gerenciamentopauta.exception.PautaExistenteException;
 import com.gerenciamentopauta.repository.PautaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

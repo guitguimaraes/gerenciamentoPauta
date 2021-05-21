@@ -1,6 +1,7 @@
 package com.gerenciamentopauta.mapper
 
-import com.gerenciamentopauta.dto.PautaDto
+import com.gerenciamentopauta.dto.PautaRequestDto
+import com.gerenciamentopauta.dto.PautaResponseDto
 import com.gerenciamentopauta.entity.Pauta
 import spock.lang.Specification
 
@@ -9,7 +10,7 @@ class PautaMapperSpec extends Specification {
     def 'pautaMapper retotna pauta recebendo um DTO'() {
         given:
 
-        PautaDto pautaDto = criaPautaDto()
+        PautaRequestDto pautaDto = criaPautaDto()
 
         when:
 
@@ -28,7 +29,7 @@ class PautaMapperSpec extends Specification {
 
         when:
 
-        PautaDto pautaDto = PautaMapper.mapPautaDto(pauta)
+        PautaResponseDto pautaDto = PautaMapper.mapPautaResponseDto(pauta)
 
         then:
 
@@ -46,8 +47,7 @@ class PautaMapperSpec extends Specification {
     }
 
     def criaPautaDto() {
-        PautaDto pautaDto = new PautaDto()
-        pautaDto.pautaId = 'pautaId'
+        PautaRequestDto pautaDto = new PautaRequestDto()
         pautaDto.nome = 'nome'
         pautaDto
     }

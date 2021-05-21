@@ -1,7 +1,8 @@
 package com.gerenciamentopauta.mapper;
 
+import com.gerenciamentopauta.dto.PautaResponseDto;
 import com.gerenciamentopauta.entity.Pauta;
-import com.gerenciamentopauta.dto.PautaDto;
+import com.gerenciamentopauta.dto.PautaRequestDto;
 
 /**
  * Mapper responsavel para transformar a entidade e o dto pauta um no outro.
@@ -10,13 +11,13 @@ public class PautaMapper {
     /**
      * metodo responsavel por transformar pautaDto na entidade pauta.
      *
-     * @param pautaDto Dto de pauta
+     * @param pautaRequestDto Dto de pauta
      * @return Pauta para gerenciar internamente.
      */
-    public static Pauta mapPauta(PautaDto pautaDto) {
+    public static Pauta mapPauta(PautaRequestDto pautaRequestDto) {
         return Pauta.builder()
-            .descricao(pautaDto.getDescricao())
-            .nome(pautaDto.getNome())
+            .descricao(pautaRequestDto.getDescricao())
+            .nome(pautaRequestDto.getNome())
             .build();
     }
 
@@ -24,13 +25,13 @@ public class PautaMapper {
      * metodo responsavel por transformar pauta no Dto pautaDto.
      *
      * @param pauta entidade pauta
-     * @return PautaDto para expor externamente.
+     * @return PautaResponseDto para expor externamente.
      */
-    public static PautaDto mapPautaDto(Pauta pauta) {
-        PautaDto pautaDto = new PautaDto();
-        pautaDto.setPautaId(pauta.getPautaId());
-        pautaDto.setDescricao(pauta.getDescricao());
-        pautaDto.setNome(pauta.getNome());
-        return pautaDto;
+    public static PautaResponseDto mapPautaResponseDto(Pauta pauta) {
+        PautaResponseDto pautaDtoResponse = new PautaResponseDto();
+        pautaDtoResponse.setPautaId(pauta.getPautaId());
+        pautaDtoResponse.setDescricao(pauta.getDescricao());
+        pautaDtoResponse.setNome(pauta.getNome());
+        return pautaDtoResponse;
     }
 }
