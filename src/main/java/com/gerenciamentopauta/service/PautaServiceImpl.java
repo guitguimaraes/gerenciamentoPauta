@@ -31,9 +31,6 @@ public class PautaServiceImpl implements PautaService {
 
     @Override
     public Pauta criarPauta(Pauta pauta) {
-        if (this.pautaRepository.existsById(pauta.getPautaId())) {
-            throw new PautaExistenteException("Pauta já existente");
-        }
         return this.pautaRepository.insert(pauta);
     }
 

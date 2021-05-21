@@ -39,9 +39,6 @@ public class SessaoServiceimpl implements SessaoService {
         if (sessaoRepository.findByPautaId(sessao.getPautaId()).isPresent()) {
             throw new SessaoAbertaException("Sessão já aberta para esta pauta");
         }
-        if (sessaoRepository.existsById(sessao.getSessaoId())) {
-            throw new SessaoAbertaException("Sessão já aberta com este id");
-        }
         return this.sessaoRepository.insert(sessao);
     }
 

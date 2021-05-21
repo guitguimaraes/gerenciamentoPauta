@@ -8,10 +8,10 @@ import org.springframework.validation.annotation.Validated;
 /**
  * Configuração das url externas da aplicação.
  */
-@ConfigurationProperties(prefix = "external")
-@Data
+
 @Configuration
-@Validated
+@ConfigurationProperties(prefix = "externo")
+@Data
 public class ConfiguracaoExternaUrl {
     private String cpfUrl;
 }

@@ -34,9 +34,6 @@ public class VotoServiceImpl implements VotoService {
         if (!isElegivelVotar(voto)) {
             throw new InelegivelVotarException(String.format("CPF %s, não está apto a realizar votação nessa pauta.", voto.getCpf()));
         }
-        if (votoRepository.existsById(voto.getId())) {
-            throw new VotoExistenteException(String.format("Voto com esse id %s, já realizado", voto.getId()));
-        }
         return votoRepository.insert(voto);
     }
 

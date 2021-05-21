@@ -25,7 +25,7 @@ public class ExceptionHandlerController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({SessaoFechadaException.class, CpfException.class, InelegivelVotarException.class,
-        SessaoAbertaException.class, SessaoInexistenteException.class, PautaExistenteException.class, VotoExistenteException.class})
+        SessaoAbertaException.class, SessaoInexistenteException.class, PautaExistenteException.class, VotoExistenteException.class, IllegalArgumentException.class})
     public ResponseEntity<ErrorRespostaDto> handleInternalServerError(Exception exception) {
         return handleException(exception, HttpStatus.BAD_REQUEST);
     }
