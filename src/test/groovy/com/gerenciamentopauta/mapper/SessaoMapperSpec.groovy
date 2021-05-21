@@ -1,6 +1,7 @@
 package com.gerenciamentopauta.mapper
 
-import com.gerenciamentopauta.dto.SessaoDto
+import com.gerenciamentopauta.dto.SessaoRequestDto
+import com.gerenciamentopauta.dto.SessaoResponseDto
 import com.gerenciamentopauta.entity.Sessao
 import spock.lang.Specification
 
@@ -11,7 +12,7 @@ class SessaoMapperSpec extends Specification {
     def 'SessaoMapper retotna sessao recebendo um DTO'() {
         given:
 
-        SessaoDto sessaoDto = criaSessaoDto()
+        SessaoRequestDto sessaoDto = criaSessaoDto()
 
         when:
 
@@ -30,7 +31,7 @@ class SessaoMapperSpec extends Specification {
 
         when:
 
-        SessaoDto sessaoDto = SessaoMapper.mapSessaoDto(sessao)
+        SessaoResponseDto sessaoDto = SessaoMapper.mapSessaoResponseDto(sessao)
 
         then:
 
@@ -49,7 +50,7 @@ class SessaoMapperSpec extends Specification {
     }
 
     def criaSessaoDto() {
-        SessaoDto sessaoDto = new SessaoDto()
+        SessaoRequestDto sessaoDto = new SessaoRequestDto()
         sessaoDto.pautaId = 'pautaId'
         sessaoDto
     }

@@ -1,6 +1,7 @@
 package com.gerenciamentopauta.mapper;
 
-import com.gerenciamentopauta.dto.SessaoDto;
+import com.gerenciamentopauta.dto.SessaoRequestDto;
+import com.gerenciamentopauta.dto.SessaoResponseDto;
 import com.gerenciamentopauta.entity.Sessao;
 
 import java.time.Duration;
@@ -14,14 +15,14 @@ public class SessaoMapper {
     /**
      * metodo responsavel por transformar sessaoDto na entidade sessão.
      *
-     * @param sessaoDto Dto de sessao
+     * @param sessaoRequestDto Dto de sessao
      * @return Sessao para gerenciar internamente.
      */
-    public static Sessao mapSessao(SessaoDto sessaoDto) {
+    public static Sessao mapSessao(SessaoRequestDto sessaoRequestDto) {
         return Sessao.builder()
-            .pautaId(sessaoDto.getPautaId())
+            .pautaId(sessaoRequestDto.getPautaId())
             .dataInicial(LocalDateTime.now())
-            .dataFinal(LocalDateTime.now().plusMinutes(sessaoDto.getDuracaoSessao()))
+            .dataFinal(LocalDateTime.now().plusMinutes(sessaoRequestDto.getDuracaoSessao()))
             .build();
     }
 
@@ -31,12 +32,12 @@ public class SessaoMapper {
      * @param sessao entidade sessao
      * @return SessaoDto para expor externamente.
      */
-    public static SessaoDto mapSessaoDto(Sessao sessao) {
-        SessaoDto sessaoDto = new SessaoDto();
-        sessaoDto.setPautaId(sessao.getPautaId());
-        sessaoDto.setDataInicial(sessao.getDataInicial());
-        sessaoDto.setDataFinal(sessao.getDataFinal());
-        sessaoDto.setDuracaoSessao(Duration.between(sessao.getDataInicial(), sessao.getDataFinal()).toMinutes());
-        return sessaoDto;
+    public static SessaoResponseDto mapSessaoResponseDto(Sessao sessao) {
+        SessaoResponseDto sessaoResponseDto = new SessaoResponseDto();
+        sessaoResponseDto.setPautaId(sessao.getPautaId());
+        sessaoResponseDto.setDataInicial(sessao.getDataInicial());
+        sessaoResponseDto.setDataFinal(sessao.getDataFinal());
+        sessaoResponseDto.setDuracaoSessao(Duration.between(sessao.getDataInicial(), sessao.getDataFinal()).toMinutes());
+        return sessaoResponseDto;
     }
 }

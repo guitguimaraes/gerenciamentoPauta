@@ -1,10 +1,11 @@
 package com.gerenciamentopauta.controller;
 
+import com.gerenciamentopauta.dto.SessaoRequestDto;
 import com.gerenciamentopauta.mapper.SessaoMapper;
 import com.gerenciamentopauta.service.SessaoService;
 import com.gerenciamentopauta.dto.ErrorRespostaDto;
 import com.gerenciamentopauta.dto.ResultadoVotacaoDto;
-import com.gerenciamentopauta.dto.SessaoDto;
+import com.gerenciamentopauta.dto.SessaoResponseDto;
 import com.gerenciamentopauta.entity.Sessao;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,17 +53,17 @@ public class SessaoController {
     @ApiOperation(value = "Retorna uma lista de todas as Sessões")
     @ResponseStatus(HttpStatus.OK)
     @ApiResponses({
-        @ApiResponse(code = 200, message = "OK", response = SessaoDto.class),
+        @ApiResponse(code = 200, message = "OK", response = SessaoResponseDto.class),
         @ApiResponse(code = 400, message = "BAD_REQUEST", response = ErrorRespostaDto.class)
     })
-    public List<SessaoDto> obterSessoes() {
+    public List<SessaoResponseDto> obterSessoes() {
         log.info("Request recebida para encontrar todas Sessões");
 
         final List<Sessao> sessoes = sessaoService.obterSessoes();
 
         log.info("{}  encontadas", kv("Numero de Sessões", sessoes.size()));
 
-        return sessoes.stream().map(SessaoMapper::mapSessaoDto).collect(Collectors.toList());
+        return sessoes.stream().map(SessaoMapper::mapSessaoResponseDto).collect(Collectors.toList());
     }
 
     /**
@@ -75,11 +76,11 @@ public class SessaoController {
     @ApiOperation(value = "Retorna uma sessão pelo id da sua pauta")
     @ResponseStatus(HttpStatus.OK)
     @ApiResponses({
-        @ApiResponse(code = 200, message = "OK", response = SessaoDto.class),
+        @ApiResponse(code = 200, message = "OK", response = SessaoResponseDto.class),
         @ApiResponse(code = 400, message = "BAD_REQUEST", response = ErrorRespostaDto.class),
         @ApiResponse(code = 500, message = "INTERNAL_SERVER_ERROR", response = ErrorRespostaDto.class)
     })
-    public SessaoDto obtemSessaoPorPautaId(@NotBlank @PathVariable String pautaId) {
+    public SessaoResponseDto obtemSessaoPorPautaId(@NotBlank @PathVariable String pautaId) {
 
         log.info("Request recebida para encontrar uma sessao pelo Id: " + pautaId);
 
@@ -87,31 +88,31 @@ public class SessaoController {
 
         log.info("{} encontrada com sucesso", kv("Sessao", sessao));
 
-        return SessaoMapper.mapSessaoDto(sessao);
+        return SessaoMapper.mapSessaoResponseDto(sessao);
     }
 
     /**
      * Abre uma sessão nova.
      *
-     * @param sessaoDto DTO de criação da sessão.
+     * @param sessaoRequestDto DTO de criação da sessão.
      * @return DTO de sessão criada.
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Abre uma sessão de votação para uma pauta")
     @ApiResponses({
-        @ApiResponse(code = 200, message = "OK", response = SessaoDto.class),
+        @ApiResponse(code = 200, message = "OK", response = SessaoResponseDto.class),
         @ApiResponse(code = 400, message = "BAD_REQUEST", response = ErrorRespostaDto.class),
         @ApiResponse(code = 500, message = "INTERNAL_SERVER_ERROR", response = ErrorRespostaDto.class)
     })
-    public SessaoDto abrirSessao(@Valid @RequestBody SessaoDto sessaoDto) {
-        log.info("Request recebido para iniciar uma sessao: {}", kv("sessaoAdicionada", sessaoDto));
+    public SessaoResponseDto abrirSessao(@Valid @RequestBody SessaoRequestDto sessaoRequestDto) {
+        log.info("Request recebido para iniciar uma sessao: {}", kv("sessaoAdicionada", sessaoRequestDto));
 
-        final Sessao sessao = sessaoService.criarSessao(SessaoMapper.mapSessao(sessaoDto));
+        final Sessao sessao = sessaoService.criarSessao(SessaoMapper.mapSessao(sessaoRequestDto));
 
         log.info(" {} adicionada com sucesso", kv("Sessao", sessao));
 
-        return SessaoMapper.mapSessaoDto(sessao);
+        return SessaoMapper.mapSessaoResponseDto(sessao);
     }
 
     /**
@@ -124,7 +125,7 @@ public class SessaoController {
     @ApiOperation(value = "Retorna o resultado de uma votação de uma sessão pelo id da sua pauta")
     @ResponseStatus(HttpStatus.OK)
     @ApiResponses({
-        @ApiResponse(code = 200, message = "OK", response = SessaoDto.class),
+        @ApiResponse(code = 200, message = "OK", response = SessaoResponseDto.class),
         @ApiResponse(code = 400, message = "BAD_REQUEST", response = ErrorRespostaDto.class),
         @ApiResponse(code = 500, message = "INTERNAL_SERVER_ERROR", response = ErrorRespostaDto.class)
     })

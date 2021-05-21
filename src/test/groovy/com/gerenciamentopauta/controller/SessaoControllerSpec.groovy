@@ -1,7 +1,8 @@
 package com.gerenciamentopauta.controller
 
 import com.gerenciamentopauta.dto.ResultadoVotacaoDto
-import com.gerenciamentopauta.dto.SessaoDto
+import com.gerenciamentopauta.dto.SessaoRequestDto
+import com.gerenciamentopauta.dto.SessaoResponseDto
 import com.gerenciamentopauta.entity.Sessao
 import com.gerenciamentopauta.service.SessaoService
 import spock.lang.Specification
@@ -21,7 +22,7 @@ class SessaoControllerSpec extends Specification {
         1 * sessaoService.obterSessoes() >> sessaoLista
 
         when:
-        List<SessaoDto> sessoes = sessaoResource.obterSessoes()
+        List<SessaoResponseDto> sessoes = sessaoResource.obterSessoes()
 
         then:
 
@@ -40,7 +41,7 @@ class SessaoControllerSpec extends Specification {
         1 * sessaoService.obterSessaoPelaPautaId(sessao.pautaId) >> sessao
 
         when:
-        SessaoDto sessaoDto = sessaoResource.obtemSessaoPorPautaId('pautaId')
+        SessaoResponseDto sessaoDto = sessaoResource.obtemSessaoPorPautaId('pautaId')
 
         then:
 
@@ -51,7 +52,7 @@ class SessaoControllerSpec extends Specification {
         noExceptionThrown()
     }
 
-    def 'Abre sessão para votação e retorna o dto da sessao criada'() {
+    def 'Abre sessao para votacao e retorna o dto da sessao criada'() {
         given:
 
         def sessao = criaSessao()
@@ -59,7 +60,7 @@ class SessaoControllerSpec extends Specification {
 
         when:
 
-        SessaoDto sessaoDto = sessaoResource.abrirSessao(criaSessaoDto())
+        SessaoResponseDto sessaoDto = sessaoResource.abrirSessao(criaSessaoDto())
 
         then:
 
@@ -101,7 +102,7 @@ class SessaoControllerSpec extends Specification {
     }
 
     def criaSessaoDto() {
-        SessaoDto sessaoDto = new SessaoDto()
+        SessaoRequestDto sessaoDto = new SessaoRequestDto()
         sessaoDto.pautaId = 'pautaId'
         sessaoDto
     }
