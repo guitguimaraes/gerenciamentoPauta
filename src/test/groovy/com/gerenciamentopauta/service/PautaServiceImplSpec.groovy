@@ -2,13 +2,15 @@ package com.gerenciamentopauta.service
 
 import com.gerenciamentopauta.entity.Pauta
 import com.gerenciamentopauta.exception.NotFoundException
+import com.gerenciamentopauta.publisher.GerenciamentoPautaPublisher
 import com.gerenciamentopauta.repository.PautaRepository
 import spock.lang.Specification
 
 class PautaServiceImplSpec extends Specification {
 
     PautaRepository pautaRepository = Mock(PautaRepository)
-    PautaService pautaService = new PautaServiceImpl(pautaRepository)
+    GerenciamentoPautaPublisher gerenciamentoPautaPublisher = Mock(GerenciamentoPautaPublisher)
+    PautaService pautaService = new PautaServiceImpl(pautaRepository, gerenciamentoPautaPublisher)
 
     def 'Pauta deve ser adicionada sem erro'() {
         given: 'Pauta válida'

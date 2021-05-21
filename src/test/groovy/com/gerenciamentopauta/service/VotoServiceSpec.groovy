@@ -7,6 +7,7 @@ import com.gerenciamentopauta.entity.Voto
 import com.gerenciamentopauta.exception.InelegivelVotarException
 import com.gerenciamentopauta.exception.SessaoFechadaException
 import com.gerenciamentopauta.exception.VotoExistenteException
+import com.gerenciamentopauta.publisher.GerenciamentoPautaPublisher
 import com.gerenciamentopauta.repository.VotoRepository
 import org.springframework.http.ResponseEntity
 import spock.lang.Specification
@@ -18,7 +19,8 @@ class VotoServiceSpec extends Specification {
     SessaoService sessaoService = Mock(SessaoService)
     CpfClient cpfClient = Mock(CpfClient)
     VotoRepository votoRepository = Mock(VotoRepository)
-    VotoService votoService = new VotoServiceImpl(sessaoService, cpfClient, votoRepository)
+    GerenciamentoPautaPublisher gerenciamentoPautaPublisher = Mock(GerenciamentoPautaPublisher)
+    VotoService votoService = new VotoServiceImpl(sessaoService, cpfClient, votoRepository, gerenciamentoPautaPublisher)
 
     def 'Voto deve ser adicionada sem erro'() {
         given: 'voto valido'

@@ -7,6 +7,7 @@ import com.gerenciamentopauta.entity.Voto;
 import com.gerenciamentopauta.exception.InelegivelVotarException;
 import com.gerenciamentopauta.exception.SessaoFechadaException;
 import com.gerenciamentopauta.exception.VotoExistenteException;
+import com.gerenciamentopauta.publisher.GerenciamentoPautaPublisher;
 import com.gerenciamentopauta.repository.VotoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,16 +26,19 @@ public class VotoServiceImpl implements VotoService {
     private SessaoService sessaoService;
     private CpfClient cpfClient;
     private VotoRepository votoRepository;
+    private GerenciamentoPautaPublisher gerenciamentoPautaPublisher;
 
     @Override
     public Voto realizarVotacao(Voto voto) {
         if (!isSessaoAberta(voto.getPautaId())) {
-            throw new SessaoFechadaException(String.format("A pauta %s não contem sessão aberta", voto.getPautaId()));
+            throw new SessaoFechadaException(String.format("A pauta %s não contem sessao aberta", voto.getPautaId()));
         }
         if (!isElegivelVotar(voto)) {
-            throw new InelegivelVotarException(String.format("CPF %s, não está apto a realizar votação nessa pauta.", voto.getCpf()));
+            throw new InelegivelVotarException(String.format("CPF %s, não esta apto a realizar votacao nessa pauta.", voto.getCpf()));
         }
-        return votoRepository.insert(voto);
+        Voto votoCriado = votoRepository.insert(voto);
+        gerenciamentoPautaPublisher.publicarVoto(votoCriado);
+        return votoCriado;
     }
 
     private boolean isSessaoAberta(String pautaId) {
@@ -47,7 +51,7 @@ public class VotoServiceImpl implements VotoService {
             final ElegivelVotoDto dto = cpfClient.isCpfValid(voto.getCpf()).getBody();
             return dto != null && ABLE_TO_VOTE.equals(dto.getStatus());
         }
-        throw new VotoExistenteException(String.format("Voto com esse cpf %s, já realizado", voto.getCpf()));
+        throw new VotoExistenteException(String.format("Voto com esse cpf %s, ja realizado", voto.getCpf()));
     }
 
     private boolean pessoaVotou(String pautaId, String cpf) {

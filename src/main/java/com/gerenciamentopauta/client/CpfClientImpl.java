@@ -1,8 +1,8 @@
 package com.gerenciamentopauta.client;
 
 import com.gerenciamentopauta.configuration.ConfiguracaoExternaUrl;
-import com.gerenciamentopauta.exception.CpfException;
 import com.gerenciamentopauta.dto.ElegivelVotoDto;
+import com.gerenciamentopauta.exception.CpfException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +25,7 @@ public class CpfClientImpl implements CpfClient {
 
     /**
      * serviço para validar cpf.
+     *
      * @param cpf cpf da pessao validada.
      * @return ElegivelVotoDto informação se o cpf está apto a votar.
      */
@@ -32,10 +33,10 @@ public class CpfClientImpl implements CpfClient {
     public ResponseEntity<ElegivelVotoDto> isCpfValid(String cpf) {
         try {
             final ResponseEntity<ElegivelVotoDto> responseEntity = restTemplate
-                    .getForEntity(configuracaoExternaUrl.getCpfUrl().concat(cpf), ElegivelVotoDto.class);
+                .getForEntity(configuracaoExternaUrl.getCpfUrl().concat(cpf), ElegivelVotoDto.class);
 
-            log.info("Validacao : {}, retorno do serviço {}",
-                kv("CPF ",cpf),
+            log.info("Validacao : {}, retorno do servico {}",
+                kv("CPF ", cpf),
                 kv("Response", responseEntity));
 
             return responseEntity;

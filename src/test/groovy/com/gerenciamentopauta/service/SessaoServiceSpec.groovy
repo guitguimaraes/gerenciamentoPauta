@@ -5,6 +5,7 @@ import com.gerenciamentopauta.entity.Sessao
 import com.gerenciamentopauta.entity.Voto
 import com.gerenciamentopauta.exception.NotFoundException
 import com.gerenciamentopauta.exception.SessaoAbertaException
+import com.gerenciamentopauta.publisher.GerenciamentoPautaPublisher
 import com.gerenciamentopauta.repository.SessaoRepository
 import com.gerenciamentopauta.repository.VotoRepository
 import spock.lang.Specification
@@ -13,7 +14,8 @@ class SessaoServiceSpec extends Specification {
 
     SessaoRepository sessaoRepository = Mock(SessaoRepository)
     VotoRepository votoRepository = Mock(VotoRepository)
-    SessaoService sessaoService = new SessaoServiceimpl(sessaoRepository, votoRepository)
+    GerenciamentoPautaPublisher gerenciamentoPautaPublisher = Mock(GerenciamentoPautaPublisher)
+    SessaoService sessaoService = new SessaoServiceimpl(sessaoRepository, votoRepository, gerenciamentoPautaPublisher)
 
     def 'Sessao deve ser adicionada sem erro'() {
         given: 'Sessao valida'

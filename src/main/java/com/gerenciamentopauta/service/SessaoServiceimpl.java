@@ -5,6 +5,7 @@ import com.gerenciamentopauta.entity.Sessao;
 import com.gerenciamentopauta.entity.Voto;
 import com.gerenciamentopauta.exception.NotFoundException;
 import com.gerenciamentopauta.exception.SessaoAbertaException;
+import com.gerenciamentopauta.publisher.GerenciamentoPautaPublisher;
 import com.gerenciamentopauta.repository.SessaoRepository;
 import com.gerenciamentopauta.repository.VotoRepository;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class SessaoServiceimpl implements SessaoService {
 
     private SessaoRepository sessaoRepository;
     private VotoRepository votoRepository;
+    private GerenciamentoPautaPublisher gerenciamentoPautaPublisher;
 
     @Override
     public List<Sessao> obterSessoes() {
@@ -31,21 +33,23 @@ public class SessaoServiceimpl implements SessaoService {
     @Override
     public Sessao obterSessaoPelaPautaId(String pautaId) {
         return this.sessaoRepository.findByPautaId(pautaId)
-            .orElseThrow(() -> new NotFoundException("Sessão não encontrada"));
+            .orElseThrow(() -> new NotFoundException("Sessao nao encontrada"));
     }
 
     @Override
     public Sessao criarSessao(Sessao sessao) {
         if (sessaoRepository.findByPautaId(sessao.getPautaId()).isPresent()) {
-            throw new SessaoAbertaException("Sessão já aberta para esta pauta");
+            throw new SessaoAbertaException("Sessão ja aberta para esta pauta");
         }
-        return this.sessaoRepository.insert(sessao);
+        Sessao sessaoCriada = this.sessaoRepository.insert(sessao);
+        gerenciamentoPautaPublisher.publicarSessao(sessaoCriada);
+        return sessaoCriada;
     }
 
     @Override
     public ResultadoVotacaoDto obtemResultadoSessaoPelaPautaId(String pautaId) {
         List<Voto> listaVoto = votoRepository.findByPautaId(pautaId)
-            .orElseThrow(() -> new NotFoundException("Votos não encontrados para a sessão"));
+            .orElseThrow(() -> new NotFoundException("Votos nao encontrados para a sessao"));
 
         ResultadoVotacaoDto resultadoVotacaoDto = new ResultadoVotacaoDto();
         resultadoVotacaoDto.setPautaId(pautaId);
@@ -55,7 +59,7 @@ public class SessaoServiceimpl implements SessaoService {
                     Voto::getVoto, Collectors.counting()
                 )
             ));
-
+        gerenciamentoPautaPublisher.publicarResultado(resultadoVotacaoDto);
         return resultadoVotacaoDto;
     }
 
