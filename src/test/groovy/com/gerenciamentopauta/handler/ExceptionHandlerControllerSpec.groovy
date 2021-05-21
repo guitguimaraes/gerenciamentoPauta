@@ -17,7 +17,6 @@ class ExceptionHandlerControllerSpec extends Specification {
 
     ExceptionHandlerController controllerHandler = new ExceptionHandlerController()
 
-
     def 'SessaoFechadaException lancada, controller deve enviar uma ErrorRespostaDto'() {
         given:
 

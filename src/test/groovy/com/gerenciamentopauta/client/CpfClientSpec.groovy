@@ -14,12 +14,11 @@ class CpfClientSpec extends Specification {
     RestTemplate restTemplate = Mock(RestTemplate)
     CpfClient cpfClient = new CpfClientImpl(configuracaoExternaUrl, restTemplate)
 
-
     def 'validando cpf sem erros'() {
         given:
         ResponseEntity<ElegivelVotoDto> responseEntity = Mock(ResponseEntity)
-        1 * configuracaoExternaUrl.getCpfUrl() >> 'url'
-        1 * restTemplate.getForEntity(_,_) >> responseEntity
+        1 * configuracaoExternaUrl.cpfUrl >> 'url'
+        1 * restTemplate.getForEntity(_, _) >> responseEntity
 
         when:
 
@@ -32,8 +31,8 @@ class CpfClientSpec extends Specification {
 
     def 'validando cpf com erro'() {
         given:
-        1 * configuracaoExternaUrl.getCpfUrl() >> 'url'
-        1 * restTemplate.getForEntity(*_) >> {throw new RestClientException('restError')}
+        1 * configuracaoExternaUrl.cpfUrl >> 'url'
+        1 * restTemplate.getForEntity(*_) >> { throw new RestClientException('restError') }
 
         when:
 

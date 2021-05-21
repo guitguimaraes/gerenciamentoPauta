@@ -24,19 +24,19 @@ class VotoServiceSpec extends Specification {
         given: 'voto valido'
 
         ResponseEntity response = Mock(ResponseEntity)
-        Voto voto = CreateVoto()
-        Sessao sessao = createSessao()
-        ElegivelVotoDto elegivel = CreateElegivelDto()
+        Voto voto = criaVoto()
+        Sessao sessao = criaSessao()
+        ElegivelVotoDto elegivel = criaElegivelDto()
 
         sessaoService.obterSessaoPelaPautaId(_) >> sessao
         votoRepository.findByPautaIdAndCpfPessoa(_, _) >> Optional.empty()
-        cpfClient.isCpfValid(voto.getCpf()) >>  response
+        cpfClient.isCpfValid(voto.cpf) >> response
         response.body >> elegivel
         votoRepository.insert(voto) >> voto
 
         when:
 
-        Voto votoSalvo = votoService.realizarVotacao(voto);
+        Voto votoSalvo = votoService.realizarVotacao(voto)
 
         then:
 
@@ -48,18 +48,17 @@ class VotoServiceSpec extends Specification {
 
     }
 
-
     def 'Voto não deve ser adicionada SessaoFechadaException deve ser lancado'() {
         given: 'voto valido'
 
-        Voto voto = CreateVoto()
-        Sessao sessao = createSessao()
+        Voto voto = criaVoto()
+        Sessao sessao = criaSessao()
         sessao.setDataFinal(LocalDateTime.now().minusMinutes(10))
 
         sessaoService.obterSessaoPelaPautaId(_) >> sessao
         when:
 
-         votoService.realizarVotacao(voto);
+        votoService.realizarVotacao(voto)
 
         then:
         thrown(SessaoFechadaException)
@@ -69,15 +68,15 @@ class VotoServiceSpec extends Specification {
     def 'Voto já adicionado, VotoExistenteException lancada'() {
         given: 'voto valido'
 
-        Voto voto = CreateVoto()
-        Sessao sessao = createSessao()
+        Voto voto = criaVoto()
+        Sessao sessao = criaSessao()
 
         sessaoService.obterSessaoPelaPautaId(_) >> sessao
         votoRepository.findByPautaIdAndCpfPessoa(_, _) >> Optional.of(voto)
 
         when:
 
-        votoService.realizarVotacao(voto);
+        votoService.realizarVotacao(voto)
 
         then:
 
@@ -89,26 +88,26 @@ class VotoServiceSpec extends Specification {
         given: 'voto valido'
 
         ResponseEntity response = Mock(ResponseEntity)
-        Voto voto = CreateVoto()
-        Sessao sessao = createSessao()
-        ElegivelVotoDto elegivel = CreateElegivelDto()
+        Voto voto = criaVoto()
+        Sessao sessao = criaSessao()
+        ElegivelVotoDto elegivel = criaElegivelDto()
         elegivel.status = 'UNABLE_TO_VOTE'
 
         sessaoService.obterSessaoPelaPautaId(_) >> sessao
         votoRepository.findByPautaIdAndCpfPessoa(_, _) >> Optional.empty()
-        cpfClient.isCpfValid(voto.getCpf()) >>  response
+        cpfClient.isCpfValid(voto.cpf) >> response
         response.body >> elegivel
 
         when:
 
-         votoService.realizarVotacao(voto);
+        votoService.realizarVotacao(voto)
 
         then:
         thrown(InelegivelVotarException)
 
     }
 
-    def createSessao() {
+    def criaSessao() {
         Sessao sessao = new Sessao(
             'id',
             'pautaId',
@@ -118,7 +117,7 @@ class VotoServiceSpec extends Specification {
         sessao
     }
 
-    def CreateVoto() {
+    def criaVoto() {
         Voto voto = new Voto(
             'id',
             'pautaId',
@@ -127,7 +126,7 @@ class VotoServiceSpec extends Specification {
         voto
     }
 
-    def CreateElegivelDto(){
+    def criaElegivelDto() {
         ElegivelVotoDto elegivel = new ElegivelVotoDto()
         elegivel.status = 'ABLE_TO_VOTE'
         elegivel

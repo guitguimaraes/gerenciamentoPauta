@@ -66,7 +66,7 @@ public class PautaResource {
     @GetMapping("/{pautaId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retorna uma pauta pelo seu id")
-    public PautaDto obtemPauta(@NotBlank @PathVariable String pautaId) {
+    public PautaDto obterPautaPeloPautaId(@NotBlank @PathVariable String pautaId) {
         log.info("Request recebida para encontrar uma pauta pelo {}", kv("PautaId", pautaId));
 
         final Pauta pauta = pautaService.obterPauta(pautaId);
@@ -85,7 +85,7 @@ public class PautaResource {
     @ApiOperation(value = "Cria uma nova pauta")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public PautaDto criaPauta(@Valid @RequestBody PautaDto pautaDto) {
+    public PautaDto criarPauta(@Valid @RequestBody PautaDto pautaDto) {
         log.info("Request recebido para adicionar uma pauta: {}", kv("pautaAdicionado", pautaDto));
 
         final Pauta pauta = pautaService.criarPauta(PautaMapper.mapPauta(pautaDto));

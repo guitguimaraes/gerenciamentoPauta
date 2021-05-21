@@ -5,7 +5,6 @@ import com.gerenciamentopauta.dto.ElegivelVotoDto;
 import com.gerenciamentopauta.entity.Sessao;
 import com.gerenciamentopauta.entity.Voto;
 import com.gerenciamentopauta.exception.InelegivelVotarException;
-import com.gerenciamentopauta.exception.SessaoAbertaException;
 import com.gerenciamentopauta.exception.SessaoFechadaException;
 import com.gerenciamentopauta.exception.VotoExistenteException;
 import com.gerenciamentopauta.repository.VotoRepository;

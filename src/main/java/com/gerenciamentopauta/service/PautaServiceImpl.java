@@ -26,12 +26,12 @@ public class PautaServiceImpl implements PautaService {
     @Override
     public Pauta obterPauta(String pautaId) {
         return this.pautaRepository.findById(pautaId)
-                .orElseThrow(() -> new NotFoundException("pauta não encontrada"));
+            .orElseThrow(() -> new NotFoundException("pauta não encontrada"));
     }
 
     @Override
     public Pauta criarPauta(Pauta pauta) {
-        if(this.pautaRepository.existsById(pauta.getPautaId())){
+        if (this.pautaRepository.existsById(pauta.getPautaId())) {
             throw new PautaExistenteException("Pauta já existente");
         }
         return this.pautaRepository.insert(pauta);

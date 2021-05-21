@@ -108,7 +108,7 @@ class SessaoServiceSpec extends Specification {
     def 'Resultado deve ser retornado pela pautaId e sem erro'() {
         given: 'Pauta id'
 
-        def sessaoLista = [CreateVoto(), CreateVoto()]
+        def sessaoLista = [criaVoto(), criaVoto()]
 
         votoRepository.findByPautaId('id') >> Optional.of(sessaoLista)
 
@@ -139,7 +139,7 @@ class SessaoServiceSpec extends Specification {
         thrown(NotFoundException)
     }
 
-    def CreateVoto() {
+    def criaVoto() {
         Voto voto = new Voto(
             'id',
             'pautaId',
