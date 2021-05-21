@@ -1,4 +1,4 @@
-package com.gerenciamentopauta.resource
+package com.gerenciamentopauta.controller
 
 import com.gerenciamentopauta.dto.VotoDto
 import com.gerenciamentopauta.entity.Voto
@@ -6,11 +6,11 @@ import com.gerenciamentopauta.mapper.VotoMapper
 import com.gerenciamentopauta.service.VotoService
 import spock.lang.Specification
 
-class VotoResourceSpec extends Specification {
+class VotoControllerSpec extends Specification {
 
     VotoService votoService = Mock(VotoService)
     VotoMapper votoMapper = Mock(VotoMapper)
-    VotoResource votoResource = new VotoResource(votoService)
+    VotoController votoResource = new VotoController(votoService)
 
     def 'realiza voto com sucesso e retorno do Dto'() {
         given:

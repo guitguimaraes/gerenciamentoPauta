@@ -1,4 +1,4 @@
-package com.gerenciamentopauta.resource;
+package com.gerenciamentopauta.controller;
 
 import com.gerenciamentopauta.mapper.SessaoMapper;
 import com.gerenciamentopauta.service.SessaoService;
@@ -6,6 +6,7 @@ import com.gerenciamentopauta.dto.ErrorRespostaDto;
 import com.gerenciamentopauta.dto.ResultadoVotacaoDto;
 import com.gerenciamentopauta.dto.SessaoDto;
 import com.gerenciamentopauta.entity.Sessao;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -32,12 +33,13 @@ import static net.logstash.logback.argument.StructuredArguments.kv;
  */
 @Slf4j
 @RestController
+@Api(tags = "Sessao Controller")
 @RequestMapping(path = "/v1/sessao")
-public class SessaoResource {
+public class SessaoController {
 
     private final SessaoService sessaoService;
 
-    public SessaoResource(SessaoService sessaoService) {
+    public SessaoController(SessaoService sessaoService) {
         this.sessaoService = sessaoService;
     }
 

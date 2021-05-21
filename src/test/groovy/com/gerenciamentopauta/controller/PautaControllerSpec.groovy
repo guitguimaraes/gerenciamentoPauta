@@ -1,14 +1,14 @@
-package com.gerenciamentopauta.resource
+package com.gerenciamentopauta.controller
 
 import com.gerenciamentopauta.dto.PautaDto
 import com.gerenciamentopauta.entity.Pauta
 import com.gerenciamentopauta.service.PautaService
 import spock.lang.Specification
 
-class PautaResourceSpec extends Specification {
+class PautaControllerSpec extends Specification {
 
     PautaService pautaService = Mock(PautaService)
-    PautaResource pautaResource = new PautaResource(pautaService)
+    PautaController pautaResource = new PautaController(pautaService)
 
     def 'Obtem todas pautas e retorna lista de PautasDto'() {
         given:

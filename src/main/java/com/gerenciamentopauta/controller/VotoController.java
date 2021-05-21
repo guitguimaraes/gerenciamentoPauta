@@ -1,10 +1,11 @@
-package com.gerenciamentopauta.resource;
+package com.gerenciamentopauta.controller;
 
 import com.gerenciamentopauta.dto.ErrorRespostaDto;
 import com.gerenciamentopauta.dto.VotoDto;
 import com.gerenciamentopauta.entity.Voto;
 import com.gerenciamentopauta.mapper.VotoMapper;
 import com.gerenciamentopauta.service.VotoService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -26,12 +27,13 @@ import static net.logstash.logback.argument.StructuredArguments.kv;
  */
 @Slf4j
 @RestController
+@Api(tags = "Voto Controller")
 @RequestMapping(path = "/v1/voto")
-public class VotoResource {
+public class VotoController {
 
     private final VotoService votoService;
 
-    public VotoResource(VotoService votoService) {
+    public VotoController(VotoService votoService) {
         this.votoService = votoService;
     }
 

@@ -1,4 +1,4 @@
-package com.gerenciamentopauta.resource;
+package com.gerenciamentopauta.controller;
 
 import com.gerenciamentopauta.service.PautaService;
 import com.gerenciamentopauta.dto.PautaDto;
@@ -29,13 +29,13 @@ import static net.logstash.logback.argument.StructuredArguments.kv;
  */
 @RestController
 @Slf4j
-@Api(value = "Pauta")
-@RequestMapping(path = "/v1/pautas")
-public class PautaResource {
+@Api(tags = "Pauta Controller")
+@RequestMapping(path = "/v1/pauta")
+public class PautaController {
 
     private final PautaService pautaService;
 
-    public PautaResource(PautaService pautaService) {
+    public PautaController(PautaService pautaService) {
         this.pautaService = pautaService;
     }
 

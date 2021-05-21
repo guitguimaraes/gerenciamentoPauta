@@ -1,4 +1,4 @@
-package com.gerenciamentopauta.resource
+package com.gerenciamentopauta.controller
 
 import com.gerenciamentopauta.dto.ResultadoVotacaoDto
 import com.gerenciamentopauta.dto.SessaoDto
@@ -8,10 +8,10 @@ import spock.lang.Specification
 
 import java.time.LocalDateTime
 
-class SessaoResourceSpec extends Specification {
+class SessaoControllerSpec extends Specification {
 
     SessaoService sessaoService = Mock(SessaoService)
-    SessaoResource sessaoResource = new SessaoResource(sessaoService)
+    SessaoController sessaoResource = new SessaoController(sessaoService)
 
     def 'Obtem todas sessoes e retorna lista de SessoesDto'() {
         given:

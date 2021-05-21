@@ -119,10 +119,6 @@ codenarc {
     configFile = file('config/codenarc/ruleset.groovy')
 }
 
-jacoco {
-    toolVersion = '0.8.5'
-}
-
 codenarcGradleConfig.dependsOn gradleConfig
 check.dependsOn codenarcGradleConfig
 check.dependsOn codenarcComponentTest
