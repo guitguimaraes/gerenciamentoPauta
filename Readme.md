@@ -29,6 +29,14 @@ da aplicação.
 Gerenciamento de pauta é uma aplicação que atravéz de APIs gerencia as pautas e contabiliza os votos realizados nas sessões.
 
 ### Rodar Aplicação
+
+####Pré Requisitos:
+
+* Java instalado na sua maquina;
+* Mongo executando na localhost:27017
+* Gradle
+
+
 Comando para executar a aplicação na url: http://localhost:9080/, basta executar o comando abaixo: 
 
 `./gradlew bootRun`
@@ -89,6 +97,7 @@ E para realização dos testes foi utilizado Groovy.
 * Melhorar cobertura de código
 * Implementar mensageria utilizando kafka para  informar outras aplicações
 * teste de performance
+* Configurar um container docker com uma imagem do mongo para facilitar na execução da aplicação 
 
  
 
