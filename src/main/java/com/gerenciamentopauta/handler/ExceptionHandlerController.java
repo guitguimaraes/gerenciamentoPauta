@@ -2,6 +2,7 @@ package com.gerenciamentopauta.handler;
 
 import com.gerenciamentopauta.dto.ErrorRespostaDto;
 import com.gerenciamentopauta.exception.CpfException;
+import com.gerenciamentopauta.exception.DuracaoSessaoException;
 import com.gerenciamentopauta.exception.InelegivelVotarException;
 import com.gerenciamentopauta.exception.NotFoundException;
 import com.gerenciamentopauta.exception.PautaExistenteException;
@@ -26,7 +27,7 @@ public class ExceptionHandlerController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({SessaoFechadaException.class, CpfException.class, InelegivelVotarException.class,
         SessaoAbertaException.class, SessaoInexistenteException.class, PautaExistenteException.class,
-        VotoExistenteException.class, IllegalArgumentException.class})
+        VotoExistenteException.class, IllegalArgumentException.class, DuracaoSessaoException.class})
     public ResponseEntity<ErrorRespostaDto> handleInternalServerError(Exception exception) {
         return handleException(exception, HttpStatus.BAD_REQUEST);
     }

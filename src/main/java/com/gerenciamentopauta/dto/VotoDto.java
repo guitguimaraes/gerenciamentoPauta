@@ -14,7 +14,7 @@ public class VotoDto {
     @NotNull(message = "Não pode ser Null")
     private String pautaId;
 
-    @ApiModelProperty(value = "Valor do Voto", allowableValues = "SIM, NAO")
+    @ApiModelProperty(value = "Valor do Voto", example = "SIM", allowableValues = "SIM, NAO")
     @NotNull(message = "Não pode ser Null")
     private String voto;
 

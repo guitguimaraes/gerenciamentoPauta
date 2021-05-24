@@ -13,6 +13,6 @@ public class SessaoRequestDto {
     @ApiModelProperty(value = "Pauta Id")
     @NotNull(message = "Não pode ser Null")
     private String pautaId;
-    @ApiModelProperty(value = "Duração Sessão Votação")
+    @ApiModelProperty(value = "Duração Sessão Votação", example = "1")
     private long duracaoSessao = 1L;
 }
